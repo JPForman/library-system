@@ -45,10 +45,10 @@ class Author
 
   def delete
     DB.exec("DELETE FROM authors WHERE id = #{@id};")
-    # DB.exec("DELETE FROM books WHERE author_id = #{@id};")
+    # DB.exec("DELETE FROM books WHERE author_id = #{@id};") #?
   end
 
-  # def books
-  #   Book.find_by_author(self.id)
-  # end
+  def books
+    Book.find_by_author(self.id)
+  end
 end
