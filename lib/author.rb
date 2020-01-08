@@ -45,10 +45,26 @@ class Author
 
   def delete
     DB.exec("DELETE FROM authors WHERE id = #{@id};")
+
+    #   results = DB.exec("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id)
+    #   JOIN books ON (authors_books.book_id = books.id)
+    #   WHERE authors.id = #{@id};")
+    #   results.each do |book|
+    #     id = book.fetch(:id)
+    #     book.find(id).delete
+    #   end
+    #   books
+    # end
+
+    # binding.pry
+
+
+
     # DB.exec("DELETE FROM books WHERE author_id = #{@id};") #?
   end
 
   def books
     Book.find_by_author(self.id)
   end
+
 end

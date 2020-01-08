@@ -50,12 +50,7 @@ class Book
   end
 
   def delete
-    DB.exec(SELECT books.* FROM authors
-    JOIN authors_books ON (authors.id = authors_books.author_id)
-    JOIN books ON (authors_books.book_id = books.id)
-    WHERE authors.id = '#{@id}';)
-
-    # DB.exec("DELETE FROM books WHERE id = #{@id};")
+    DB.exec("DELETE FROM books WHERE id = #{@id};")
   end
 
   def self.clear
@@ -64,11 +59,11 @@ class Book
 
   def self.find_by_author(auth_id)
     books = []
-    returned_books = DB.exec("SELECT * FROM books WHERE author_id = #{auth_id};")
+    returned_books = DB.exec("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE authors.id = #{auth_id};")
     returned_books.each() do |book|
       name = book.fetch("name")
       id = book.fetch("id").to_i
-      books.push(Book.new({:name => name, :author_id => auth_id, :id => id}))
+      books.push(Book.new({:name => name, :id => id}))
     end
     books
   end

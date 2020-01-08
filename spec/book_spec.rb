@@ -5,6 +5,7 @@ describe '#Book' do
   before(:each) do
     @author = Author.new({:name => "J.D. Salinger", :id => nil})
     @author.save()
+    Book.clear
   end
 
   describe('#==') do
@@ -78,31 +79,14 @@ describe '#Book' do
 
     describe('#delete') do
       it("deletes an book by id") do
-        book =
-        Book.new({:name => "Giant Steps", :id => nil})
+        book = Book.new({:name => "Giant Steps", :id => nil})
         book.save()
-        book2 =
-        Book.new({:name => "Naima", :id => nil})
+        book2 = Book.new({:name => "Naima", :id => nil})
         book2.save()
         book.delete()
-        expect(
-          Book.all).to(eq([book2]))
+        expect(Book.all).to(eq([book2]))
       end
     end
-
-    describe('#delete') do
-    it("deletes all books belonging to a deleted author") do
-      author = Author.new({:name => "A Love Supreme", :id => nil})
-      author.save()
-      book =
-      Book.new({:name => "Naima", :id => nil})
-      book.save()
-      author.delete()
-      expect(
-        Book.find(book.id)).to(eq(nil))
-    end
-  end
-
   #   describe('.find_by_author') do
   #     it("finds books for an author") do
   #       author2 = Album.new({:name => "Blue", :id => nil})
