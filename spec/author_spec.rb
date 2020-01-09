@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe '#Author' do
+
+  before(:each) do
+    Author.clear
+  end
+
   describe('.all') do
     it("returns all authors") do
       expect(Author.all).to(eq([]))
@@ -80,18 +85,24 @@ describe '#Author' do
       end
     end
 
-    # describe('#books') do
-    #   it("returns an author's books") do
-    #     author = Author.new({:name => "J.D.Salinger", :id => nil})
-    #     author.save()
-    #     book = Book.new({:name => "Naima", :id => nil})
-    #     book.save()
-    #     book2 = Book.new({:name => "Cousin Mary", :id => nil})
-    #     book2.save()
-    #     author.update({:name => "Cousin Mary"})
-    #     expect(author.books).to(eq([book2]))
-    #   end
-    # end
+    describe('#find_books_by_author') do
+      it("returns an author's books") do
+        author = Author.new({:name => "J.D.Salinger", :id => nil})
+        author.save()
 
+        author2 = Author.new({:name => "Faulkner", :id => nil})
+        author2.save()
 
+        book = Book.new({:name => "Naima", :id => nil})
+        book.save()
+
+        book2 = Book.new({:name => "As I Lay Dying", :id => nil})
+        book2.save()
+
+        author.update({:title => "Naima"})
+        author2.update({:title => "As I Lay Dying"})
+        expect(Book.find_books_by_author(author.id)).to(eq([book]))
+        expect(Book.find_books_by_author(author2.id)).to(eq([book2]))
+      end
+    end
   end

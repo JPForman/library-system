@@ -33,9 +33,13 @@ class Author
 
   def self.find(id)
     author = DB.exec("SELECT * FROM authors WHERE id = #{id};").first
-    name = author.fetch("name")
-    id = author.fetch("id")
-    Author.new({:name => name, :id => id})
+    if author
+      id = author.fetch("id")
+      name = author.fetch("name")
+      Author.new({:id => id, :name => name})
+    else
+      nil
+    end
   end
 
   def update(attributes)
@@ -48,10 +52,8 @@ class Author
       book = DB.exec("SELECT * FROM books WHERE lower(title) ='#{title.downcase}';").first
       puts DB.exec("SELECT * FROM books;").first
       if book != nil
-        puts "1"
         DB.exec("INSERT INTO authors_books (book_id, author_id) VALUES (#{book['id'].to_i}, #{@id});")
       else
-        puts "2"
         new_book = Book.new({:name => title, :id => nil})
         new_book.save
         DB.exec("INSERT INTO authors_books (book_id, author_id) VALUES (#{new_book.id}, #{@id});")
@@ -61,26 +63,21 @@ class Author
 
   def delete
     DB.exec("DELETE FROM authors WHERE id = #{@id};")
-
-    #   results = DB.exec("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id)
-    #   JOIN books ON (authors_books.book_id = books.id)
-    #   WHERE authors.id = #{@id};")
-    #   results.each do |book|
-    #     id = book.fetch(:id)
-    #     book.find(id).delete
-    #   end
-    #   books
-    # end
-
-    # binding.pry
-
-
-
-    # DB.exec("DELETE FROM books WHERE author_id = #{@id};") #?
   end
 
-  def books
-    Book.find_by_author(self.id)
+  def self.find_authors_by_book(book_id)
+    authors = []
+    results = DB.exec("SELECT * FROM authors_books WHERE book_id = #{book_id};")
+    binding.pry
+    # results return as {"id"=>"706", "author_id"=>"4415", "book_id"=>"2907"}
+    results.each() do |result|
+      book_id = result.fetch("book_id").to_i()
+      author_id = result.fetch("author_id").to_i()
+      author = DB.exec("SELECT * FROM authors WHERE id = #{author_id};")
+      name = author.first().fetch("name")
+      authors.push(Author.new({:name => name, :id => author_id}))
+    end
+    authors
   end
 
 end

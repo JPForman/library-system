@@ -86,24 +86,18 @@ describe '#Book' do
               expect(Book.all).to(eq([book2]))
             end
           end
-          describe('.find_by_author') do
-            it("finds books for an author") do
+
+          describe('.find_authors_by_book') do
+            it("finds authors of a book") do
+              author1 = Author.new({:name => "Red", :id => nil})
+              author1.save
               author2 = Author.new({:name => "Blue", :id => nil})
               author2.save
-              book = Book.new({:name => "Naima", :id => nil})
+              book = Book.new({:name => "California", :id => nil})
               book.save()
-              book2 = Book.new({:name => "California", :id => nil})
-              book2.save()
-              author2.update({:name => "J.D.Salinger", :id => nil, :title => "California"})
-              expect(Book.find_by_author(author2.id)).to(eq([book2]))
+              author1.update({:name => "Red", :id => nil, :title => "California"})
+              author2.update({:name => "Blue", :id => nil, :title => "California"})
+              expect(Author.find_authors_by_book(book.id)).to(eq([author1, author2]))
             end
           end
-          #
-          # describe('#author') do
-          #   it("finds the author a book belongs to") do
-          #     book = Book.new({:name => "Naima", :id => nil})
-          #     book.save()
-          #     expect(book.author()).to(eq(@author))
-          #   end
-          # end
         end

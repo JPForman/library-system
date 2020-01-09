@@ -30,7 +30,6 @@ class Book
 
   def save
     result = DB.exec("INSERT INTO books (title) VALUES ('#{@name}') RETURNING id;")
-    puts @name
     @id = result.first().fetch("id").to_i
   end
 
@@ -58,7 +57,7 @@ class Book
     DB.exec("DELETE FROM books *;")
   end
 
-  def self.find_by_author(auth_id)
+  def self.find_books_by_author(auth_id)
     books = []
     returned_books = DB.exec("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE authors.id = #{auth_id};")
     returned_books.each() do |book|
@@ -69,7 +68,19 @@ class Book
     books
   end
 
-  def author
-    Author.find(@author_id)
-  end
+  # def authors
+  #   books = []
+  #   results = DB.exec("SELECT * FROM authors_books WHERE book_id = #{@id};")
+  #   binding.pry
+  #   # results return as {"book_id" => "1654"}
+  #   results.each() do |result|
+  #     book_id = result.fetch("book_id").to_i()
+  #     author_id = result.fetch("author_id").to_i()
+  #     books = DB.exec("SELECT * FROM books WHERE id = #{author_id};")
+  #     # binding.pry
+  #     # name = author.first().fetch("name") ---- undefined method `fetch' for nil:NilClass
+  #     books.push(Book.new({:name => book_id, :id => author_id}))
+  #   end
+  #   books
+  # end
 end
