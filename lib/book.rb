@@ -67,20 +67,4 @@ class Book
     end
     books
   end
-
-  # def authors
-  #   books = []
-  #   results = DB.exec("SELECT * FROM authors_books WHERE book_id = #{@id};")
-  #   binding.pry
-  #   # results return as {"book_id" => "1654"}
-  #   results.each() do |result|
-  #     book_id = result.fetch("book_id").to_i()
-  #     author_id = result.fetch("author_id").to_i()
-  #     books = DB.exec("SELECT * FROM books WHERE id = #{author_id};")
-  #     # binding.pry
-  #     # name = author.first().fetch("name") ---- undefined method `fetch' for nil:NilClass
-  #     books.push(Book.new({:name => book_id, :id => author_id}))
-  #   end
-  #   books
-  # end
 end
