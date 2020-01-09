@@ -1,0 +1,28 @@
+<h2>Book Title: <%= @book.name %></h2>
+
+<h3>Authors</h3>
+
+  <% if Author.find_authors_by_book(@book.id).length > 0 %>
+    <ul>
+      <% Author.find_authors_by_book(@book.id).each do |author| %>
+        <li><a href="/books/<%= @book.id %>/authors/<%= author.id %>"><%= author.name %></a></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>There are no authors listed for this book yet.</p>
+  <% end %>
+
+<h4>Add an author:</h4>
+
+<form action="/books/<%= @book.id %>/authors" method="post">
+  <div class="form-group">
+    <label for="author_name">Author name</label>
+    <input id="author_name" name="author_name" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Add author</button>
+</form>
+
+
+
+<p><a href="/books/<%= @book.id %>/edit">Edit book</a></p>
+<p><a href="/books">Return to book list</a></p>

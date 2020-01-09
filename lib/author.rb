@@ -68,7 +68,6 @@ class Author
   def self.find_authors_by_book(book_id)
     authors = []
     results = DB.exec("SELECT * FROM authors_books WHERE book_id = #{book_id};")
-    binding.pry
     # results return as {"id"=>"706", "author_id"=>"4415", "book_id"=>"2907"}
     results.each() do |result|
       book_id = result.fetch("book_id").to_i()
