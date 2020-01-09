@@ -3,7 +3,7 @@ class Book
   attr_accessor :name, :author_id
 
   def initialize(attributes)
-    @title = attributes.fetch(:name)
+    @name = attributes.fetch(:name)
     # @author_id = attributes.fetch(:author_id)
     @id = attributes.fetch(:id)
   end
@@ -30,6 +30,7 @@ class Book
 
   def save
     result = DB.exec("INSERT INTO books (title) VALUES ('#{@name}') RETURNING id;")
+    puts @name
     @id = result.first().fetch("id").to_i
   end
 

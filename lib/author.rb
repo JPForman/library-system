@@ -46,9 +46,12 @@ class Author
     if (attributes.has_key?(:title)) && (attributes.fetch(:title) != nil)
       title = attributes.fetch(:title)
       book = DB.exec("SELECT * FROM books WHERE lower(title) ='#{title.downcase}';").first
+      puts DB.exec("SELECT * FROM books;").first
       if book != nil
+        puts "1"
         DB.exec("INSERT INTO authors_books (book_id, author_id) VALUES (#{book['id'].to_i}, #{@id});")
       else
+        puts "2"
         new_book = Book.new({:name => title, :id => nil})
         new_book.save
         DB.exec("INSERT INTO authors_books (book_id, author_id) VALUES (#{new_book.id}, #{@id});")
