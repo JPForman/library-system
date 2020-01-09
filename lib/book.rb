@@ -61,7 +61,7 @@ class Book
     books = []
     returned_books = DB.exec("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE authors.id = #{auth_id};")
     returned_books.each() do |book|
-      name = book.fetch("name")
+      name = book.fetch("title")
       id = book.fetch("id").to_i
       books.push(Book.new({:name => name, :id => id}))
     end

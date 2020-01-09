@@ -52,8 +52,8 @@ describe '#Author' do
     it("updates an author by id") do
       author = Author.new({:name => "J.D.Salinger", :id => nil})
       author.save()
-      author.update("J.D.Salinger")
-      expect(author.name).to(eq("J.D.Salinger"))
+      author.update({:name => "P.T Anderson"})
+      expect(author.name).to(eq("P.T Anderson"))
     end
   end
 
@@ -80,17 +80,18 @@ describe '#Author' do
       end
     end
 
-    describe('#books') do
-      it("returns an author's books") do
-        author = Author.new({:name => "J.D.Salinger", :id => nil})
-        author.save()
-        book = Book.new({:name => "Naima", :id => nil})
-        book.save()
-        book2 = Book.new({:name => "Cousin Mary", :id => nil})
-        book2.save()
-        expect(author.books).to(eq([book, book2]))
-      end
-    end
+    # describe('#books') do
+    #   it("returns an author's books") do
+    #     author = Author.new({:name => "J.D.Salinger", :id => nil})
+    #     author.save()
+    #     book = Book.new({:name => "Naima", :id => nil})
+    #     book.save()
+    #     book2 = Book.new({:name => "Cousin Mary", :id => nil})
+    #     book2.save()
+    #     author.update({:name => "Cousin Mary"})
+    #     expect(author.books).to(eq([book2]))
+    #   end
+    # end
 
 
   end
