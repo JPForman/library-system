@@ -1,0 +1,12 @@
+<h1>Author: <%= @author.name %></h1>
+
+<h2>Books</h2>
+<% if Book.find_books_by_author(@author.id).length > 0 %>
+  <ul>
+    <% Book.find_books_by_author(@author.id).each do |book| %>
+      <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are no books listed for this author yet.</p>
+<% end %>

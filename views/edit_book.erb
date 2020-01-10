@@ -1,0 +1,17 @@
+<h1>Update <%=@book.name() %></h1>
+
+<form action="/books/<%= @book.id() %>" method="post">
+  <input name="_method" type="hidden" value="patch">
+
+  <label for="name">Rename book</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Update</button>
+</form>
+
+<form action="/books/<%= @book.id() %>" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete book</button>
+</form>
+<p><a href="/books">Return to book list</a></p>
